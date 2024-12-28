@@ -27,4 +27,19 @@ public class ExpenseService {
     public void deleteExpense(Long id){
         expenseRepository.deleteById(id);
     }
+
+    public List<Expense> getExpensesByCategory(String category){
+        return expenseRepository.findByCategory(category);
+    }
+
+    public Expense updateExpense(Long id, Expense updatedExpense){
+        Expense existingExpense = expenseRepository.findById(id).orElseThrow(() -> new RuntimeException("Expense not found"));
+        existingExpense.setTitle(updatedExpense.getTitle());
+        existingExpense.setAmount(updatedExpense.getAmount());
+        existingExpense.setCategory(updatedExpense.getCategory());
+        existingExpense.setDate(updatedExpense.getDate());
+        return expenseRepository.save(existingExpense);
+    }
+
+    
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,18 +23,23 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Expense> getAllExpenses(){
         return expenseService.getAllExpenses();
     }
 
-    @PostMapping
-    public Expense saveExpense(Expense expense){
+    @PostMapping("/save")
+    public Expense saveExpense(@RequestBody Expense expense){
         return expenseService.saveExpense(expense);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteExpense(@PathVariable Long id){
         expenseService.deleteExpense(id);
+    }
+
+    @GetMapping("/category/{category}")
+    public List<Expense> getExpensesByCategory(@PathVariable String category){
+        return expenseService.getExpensesByCategory(category);
     }
 }
