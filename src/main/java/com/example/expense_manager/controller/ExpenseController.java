@@ -16,6 +16,28 @@ import org.springframework.web.service.annotation.PutExchange;
 import com.example.expense_manager.model.Expense;
 import com.example.expense_manager.service.ExpenseService;
 
+import jakarta.validation.Valid;
+
+/**
+ * ExpenseController is a REST controller that handles HTTP requests for managing expenses.
+ * It provides endpoints to perform CRUD operations and other expense-related queries.
+ * 
+ * Endpoints:
+ * 
+ * - GET /api/expenses/all: Retrieve all expenses.
+ * - POST /api/expenses/save: Save a new expense.
+ * - DELETE /api/expenses/delete/{id}: Delete an expense by its ID.
+ * - GET /api/expenses/category/{category}: Retrieve expenses by category.
+ * - PUT /api/expenses/update/{id}: Update an existing expense by its ID.
+ * - GET /api/expenses/date-range: Retrieve expenses within a specified date range.
+ * - GET /api/expenses/summary: Get a summary of expenses.
+ * - GET /api/expenses/id/{id}: Retrieve an expense by its ID.
+ * - GET /api/expenses/search: Search expenses by title.
+ * 
+ * This controller uses ExpenseService to perform the actual operations.
+ * 
+ * @author 
+ */
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpenseController {
@@ -32,7 +54,7 @@ public class ExpenseController {
     }
 
     @PostMapping("/save")
-    public Expense saveExpense(@RequestBody Expense expense){
+    public Expense saveExpense(@Valid @RequestBody Expense expense){
         return expenseService.saveExpense(expense);
     }
 
@@ -47,7 +69,7 @@ public class ExpenseController {
     }
 
     @PutExchange("/update/{id}")
-    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense updatedExpense){
+    public Expense updateExpense(@PathVariable Long id,@Valid @RequestBody Expense updatedExpense){
         return expenseService.updateExpense(id, updatedExpense);
     }
 
